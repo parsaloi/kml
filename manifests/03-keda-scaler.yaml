@@ -13,7 +13,8 @@ spec:
   triggers:
   - type: prometheus
     metadata:
-      serverAddress: http://prometheus-server.monitoring.svc.cluster.local
+      # Append :80 to explicitly define the service port
+      serverAddress: http://prometheus-server.monitoring.svc.cluster.local:80
       metricName: app_predicted_qps_5m_ahead
       # Target: Maintain ~20 QPS per pod based on PREDICTED load
       threshold: '20'
