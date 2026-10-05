@@ -8,9 +8,9 @@ This repository demonstrates the KML (KEDA + Machine Learning) conceptual framew
 2. **Intelligence:** A lightweight Python microservice uses Facebook Prophet to ingest historical/live metrics and project demand 5 minutes into the future.
 3. **Execution:** KEDA (Kubernetes Event-driven Autoscaling) reads this forecasted metric via Prometheus and scales the application preemptively, eliminating cold-start latency.
 
-## Prerequisites (Windows 16GB Environment)
+## Prerequisites (16GB memory Environment)
 
-This POC is designed to run locally on a Windows machine. 16GB of RAM is sufficient for this stack.
+This POC is designed to run locally on a dev machine. 16GB of RAM is sufficient for this stack.
 
 * **Docker Desktop**: Ensure the WSL2 backend is enabled (Settings > General > Use the WSL 2 based engine). Allocate at least 4GB RAM to WSL if configured manually via `.wslconfig`.
 * **WSL2 / PowerShell**: The commands below can be run in PowerShell or a WSL2 terminal (Ubuntu).
