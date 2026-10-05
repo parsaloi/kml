@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kml-forecaster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kml-forecaster
+  template:
+    metadata:
+      labels:
+        app: kml-forecaster
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+    spec:
+      containers:
+      - name: forecaster
+        image: kml-forecaster:v2
+        imagePullPolicy: Never # Forces kind to use the locally loaded image
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kml-forecaster-service
+spec:
+  ports:
+  - port: 8000
+    targetPort: 8000
+  selector:
+    app: kml-forecaster

@@ -1,0 +1,20 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: demo-api-predictive-scaler
+  namespace: default
+spec:
+  scaleTargetRef:
+    name: demo-api
+  minReplicaCount: 2
+  maxReplicaCount: 15
+  cooldownPeriod: 60
+  pollingInterval: 15
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://prometheus-server.monitoring.svc.cluster.local
+      metricName: app_predicted_qps_5m_ahead
+      # Target: Maintain ~20 QPS per pod based on PREDICTED load
+      threshold: '20'
+      query: sum(app_predicted_qps_5m_ahead)
