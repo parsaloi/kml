@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: demo-api
-  labels:
-    app: demo-api
 spec:
   replicas: 2
   selector:
@@ -15,23 +13,22 @@ spec:
         app: demo-api
       annotations:
         prometheus.io/scrape: "true"
-        prometheus.io/port: "80"
+        prometheus.io/port: "9898"
     spec:
       containers:
       - name: web
-        image: nginxdemos/hello
+        image: stefanprodan/podinfo:latest
+        imagePullPolicy: IfNotPresent # <--- Add this line
         ports:
-        - containerPort: 80
+        - containerPort: 9898
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: demo-api-service
-  labels:
-    app: demo-api
 spec:
   ports:
   - port: 80
-    targetPort: 80
+    targetPort: 9898
   selector:
     app: demo-api
